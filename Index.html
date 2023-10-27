@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    background-color: darkgray;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTc8xApeuVNQGW-uXNgDOklDKENktrKrtEKWmFaxAB9LyQn_2x2SEnRmdUT7HMpSyZi2c&usqp=CAU");
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: wheat;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 1000px;
+    height: 500px;
+}
+
+h1 {
+    color: black;
+    font-family: Arial, Helvetica, sans-serifs;
+    font-size: 60px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+button {
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: green;
+}
+#cryptoPrice {
+    margin-top: 20px;
+}
+.container label{
+    color: goldenrod;
+    font-size: 30px;
+}
+.container option{
+    color: ;
+    background-color: ;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    
+}
+
+
+   </style>
+    <title>Crypto Tracker</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Crypto Tracker</h1><br><br>
+        <label for="cryptoSelect">Select Coin Type:</label>
+        <select id="cryptoSelect">
+            <option value="bitcoin">Bitcoin</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="ripple">Ripple</option>
+            <!-- Add more options as needed -->
+        </select>
+       <br><br> <button onclick="getCryptoPrice()">Get Price</button>
+        <div id="cryptoPrice"></div>
+    </div>
+
+    <script>
+
+
+function getCryptoPrice() {
+    const cryptoSelect = document.getElementById('cryptoSelect');
+    const selectedCrypto = cryptoSelect.value.toLowerCase();
+    const cryptoPriceDiv = document.getElementById('cryptoPrice');
+
+    const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${selectedCrypto}&vs_currencies=usd`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                cryptoPriceDiv.textContent = 'Coin not found. Please select a valid coin type.';
+            } else {
+                cryptoPriceDiv.textContent = `Current Price of ${selectedCrypto.toUpperCase()}: ${data[selectedCrypto].usd} USD`;
+            }
+        })
+        .catch(error => console.error(`Error fetching data for ${selectedCrypto}:`, error));
+}
+    </script>
+</body>
+</html>
